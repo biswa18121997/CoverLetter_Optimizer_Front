@@ -1,6 +1,4 @@
-
-
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Document, Page, Text, View, StyleSheet, PDFViewer } from "@react-pdf/renderer";
 
 // ---------------- PDF Styles ----------------
@@ -158,7 +156,9 @@ const CoverLetterPDF = ({ fields }) => (
     </Page>
   </Document>
 );
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 // ---------------- Main Component ----------------
 async function fetchAllUser() {
   try {
@@ -183,6 +183,7 @@ const CoverLetterOptimizer = () => {
   const [usersLoading, setUsersLoading] = useState(false);
   const [pdfRenderKey, setPdfRenderKey] = useState(0);
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [improvements, setImprovements] = useState([]);
 
   const [fields, setFields] = useState({
     name: "Venkata Mani Teja Sunkara",
@@ -255,73 +256,41 @@ const CoverLetterOptimizer = () => {
   const handleOptimize = async () => {
     setLoading(true);
     try {
-      console.log("🚀 Sending optimization request with fields:", fields);
-      console.log("📄 Job description:", jobDesc);
-      
       const response = await fetch(`${BASE_URL}/api/optimize-cover-letter`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fields, jobDesc }),
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("❌ Response not OK:", response.status, errorText);
-        throw new Error(`Failed to optimize cover letter: ${response.status}`);
-      }
-
       const data = await response.json();
-      console.log("✅ Received response from backend:", data);
-      
+
       if (data.optimizedFields) {
-        console.log("🔄 Raw optimized fields:", data.optimizedFields);
-        
-        // Handle both string and object responses
         let parsedFields;
-        if (typeof data.optimizedFields === 'string') {
-          try {
-            // Clean the string - remove markdown code blocks if present
-            let cleanedString = data.optimizedFields.trim();
-            
-            // Remove ```json and ``` if present
-            if (cleanedString.startsWith('```json')) {
-              cleanedString = cleanedString.replace(/^```json\s*/, '').replace(/\s*```$/, '');
-            } else if (cleanedString.startsWith('```')) {
-              cleanedString = cleanedString.replace(/^```\s*/, '').replace(/\s*```$/, '');
-            }
-            
-            console.log("🧹 Cleaned string:", cleanedString);
-            parsedFields = JSON.parse(cleanedString);
-            console.log("✅ Parsed string to object:", parsedFields);
-          } catch (parseError) {
-            console.error("❌ Failed to parse optimized fields string:", parseError);
-            console.error("❌ Raw string was:", data.optimizedFields);
-            throw new Error("Invalid JSON format from server");
+        if (typeof data.optimizedFields === "string") {
+          let cleanedString = data.optimizedFields.trim();
+          if (cleanedString.startsWith("```json")) {
+            cleanedString = cleanedString.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+          } else if (cleanedString.startsWith("```")) {
+            cleanedString = cleanedString.replace(/^```\s*/, "").replace(/\s*```$/, "");
           }
+          parsedFields = JSON.parse(cleanedString);
         } else {
           parsedFields = data.optimizedFields;
-          console.log("✅ Using object directly:", parsedFields);
         }
-        
-        console.log("🔄 Setting optimized fields:", parsedFields);
-        
-        // Merge optimized fields with existing fields to preserve any missing properties
-        const mergedFields = {
-          ...fields, // Keep existing fields as fallback
-          ...parsedFields, // Override with optimized fields
-        };
-        
-        console.log("🔄 Merged fields (existing + optimized):", mergedFields);
+
+        const mergedFields = { ...fields, ...parsedFields };
         setFields(mergedFields);
+
+        // Save improvements if backend sends them
+        if (data.improvements) {
+          setImprovements(data.improvements);
+        }
+        console.log(data.improvements);
         setPdfLoading(true);
         setTimeout(() => {
           setPdfRenderKey(prev => prev + 1);
           setPdfLoading(false);
         }, 100);
-        console.log("✅ Cover letter optimized successfully!");
-      } else {
-        console.error("❌ No optimized fields in response:", data);
-        throw new Error("No optimized fields returned from server");
       }
     } catch (err) {
       console.error("❌ Error in handleOptimize:", err);
@@ -333,7 +302,7 @@ const CoverLetterOptimizer = () => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Left Side */}
+      {/* Left Side (Search + Form) */}
       <div className="w-1/3 bg-white p-6 border-r shadow-md overflow-y-auto">
         {!selectedUser ? (
           <div>
@@ -472,11 +441,12 @@ const CoverLetterOptimizer = () => {
           </div>
         )}
       </div>
+      {/* <-- This closes the left panel */}
 
-      {/* Right PDF Preview */}
-      <div className="flex-1 p-6 flex flex-col">
+      {/* Right PDF Preview + Improvements */}
+      <div className="flex-1 p-6 flex flex-col overflow-y-auto">
         <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">📑 Cover Letter Preview</h2>
-        <div className="flex-1 border rounded-lg shadow-lg bg-white flex flex-col">
+        <div className="flex-1 border rounded-lg shadow-lg bg-white flex flex-col mb-4">
           {pdfLoading ? (
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
@@ -503,6 +473,56 @@ const CoverLetterOptimizer = () => {
             </PDFViewer>
           )}
         </div>
+
+        {/* Improvements Section */}
+        {/* {improvements.length > 0 && (
+  <div className="bg-white shadow rounded-lg p-4 border">
+    <h3 className="text-lg font-semibold mb-3">✨ Improvements Made</h3>
+    <ul className="space-y-3">
+      {improvements.map((imp, idx) => (
+        <li key={idx} className="p-3 border rounded bg-gray-50">
+          <p className="text-sm text-gray-600">
+            <span className="font-semibold text-red-600">Previous:</span>{" "}
+            {Array.isArray(imp.previous)
+              ? (
+                  <ul className="list-disc ml-5">
+                    {imp.previous.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                )
+              : imp.previous}
+          </p>
+          <p className="text-sm text-gray-600 mt-1">
+            <span className="font-semibold text-green-600">Optimized:</span>{" "}
+            {Array.isArray(imp.optimized)
+              ? (
+                  <ul className="list-disc ml-5">
+                    {imp.optimized.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                )
+              : imp.optimized}
+          </p>
+          <p className="text-sm text-gray-700 mt-1 italic">
+            <span className="font-semibold">Why Better:</span> {imp.reason}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+)} */}
+{improvements.length > 0 && (
+  <div className="bg-white shadow rounded-lg p-4 border">
+    <h3 className="text-lg font-semibold mb-3">✨ Improvements Made</h3>
+    <ul className="list-disc ml-5 space-y-2">
+      {improvements.map((imp, idx) => (
+        <li key={idx} className="text-sm text-gray-700">{imp}</li>
+      ))}
+    </ul>
+  </div>
+)}
       </div>
     </div>
   );
