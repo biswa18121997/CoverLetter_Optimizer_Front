@@ -13,7 +13,7 @@ const pdfStyles = StyleSheet.create({
   heading: { fontSize: 12, fontWeight: "bold", marginBottom: 4 },
   paragraph: { marginBottom: 6, textAlign: "justify" },
   listItem: { marginLeft: 14, marginBottom: 4 },
-  signature: { marginTop: 16, fontSize: 11 },
+    signature: { marginTop: 16, fontSize: 11 },
 });
 
 // ---------------- Reusable Inputs ----------------
@@ -40,8 +40,8 @@ const TextAreaField = ({ label, name, value, onChange }) => (
     />
   </div>
 );
-
-const BulletListEditor = ({ label, items = [], setItems }) => {
+// Replace your existing BulletListEditor with this version:
+const BulletListEditor = ({ label, items = [], setItems, listType = "bullet", setListType, onRemoveSection }) => {
   const updateItem = (idx, newVal) => {
     const newItems = [...(items || [])];
     newItems[idx] = newVal;
@@ -54,9 +54,42 @@ const BulletListEditor = ({ label, items = [], setItems }) => {
     setItems(newItems);
   };
 
+  const toggleType = (t) => {
+    if (setListType) setListType(t);
+  };
+
   return (
-    <div>
-      <h4 className="text-sm font-medium text-gray-700 mb-2">{label}</h4>
+    <div className="mb-4">
+      <div className="flex items-center justify-between mb-2">
+        <h4 className="text-sm font-medium text-gray-700">{label}</h4>
+        <div className="flex items-center space-x-2">
+          <button
+            type="button"
+            className={`px-2 py-1 text-sm rounded ${listType === "bullet" ? "bg-gray-200" : "bg-white"}`}
+            onClick={() => toggleType("bullet")}
+          >
+            • Bulleted
+          </button>
+          <button
+            type="button"
+            className={`px-2 py-1 text-sm rounded ${listType === "number" ? "bg-gray-200" : "bg-white"}`}
+            onClick={() => toggleType("number")}
+          >
+            1. Numbered
+          </button>
+          {onRemoveSection && (
+            <button
+              type="button"
+              className="text-red-500 text-sm ml-2"
+              onClick={onRemoveSection}
+              title="Remove this entire list"
+            >
+              Remove Section
+            </button>
+          )}
+        </div>
+      </div>
+
       {(items || []).map((item, idx) => (
         <div key={idx} className="flex space-x-2 mb-2">
           <input
@@ -68,18 +101,23 @@ const BulletListEditor = ({ label, items = [], setItems }) => {
             type="button"
             className="text-red-500 text-sm"
             onClick={() => removeItem(idx)}
+            title="Remove this point"
           >
             ✖
           </button>
         </div>
       ))}
-      <button
-        type="button"
-        onClick={addItem}
-        className="text-blue-600 text-sm mt-1"
-      >
-        + Add bullet
-      </button>
+
+      <div className="flex items-center space-x-3">
+        <button
+          type="button"
+          onClick={addItem}
+          className="text-blue-600 text-sm mt-1"
+        >
+          + Add point
+        </button>
+        <span className="text-xs text-gray-500">({items?.length ?? 0} points)</span>
+      </div>
     </div>
   );
 };
@@ -95,24 +133,29 @@ const CoverLetterPDF = ({ fields }) => (
       </View>
 
       {/* Why Consider Me */}
-      {fields.whyMe?.length > 0 && (
-        <View style={pdfStyles.section}>
-          <Text style={pdfStyles.heading}>Why consider me:</Text>
-          {fields.whyMe.map((point, i) => (
-            <Text key={i} style={pdfStyles.listItem} wrap>{point || ""}</Text>
-          ))}
-        </View>
-      )}
+     {fields.whyMe?.length > 0 && (
+  <View style={pdfStyles.section}>
+    <Text style={pdfStyles.heading}>Why consider me:</Text>
+    {fields.whyMe.map((point, i) => {
+      const t = fields.whyMeType || "bullet";
+      const prefix = t === "number" ? `${i + 1}. ` : "• ";
+      return <Text key={i} style={pdfStyles.listItem} wrap>{prefix + (point || "")}</Text>;
+    })}
+  </View>
+)}
+
 
       {/* What Sets Me Apart */}
-      {fields.whatSetsMeApart?.length > 0 && (
-        <View style={pdfStyles.section}>
-          <Text style={pdfStyles.heading}>What sets me apart:</Text>
-          {fields.whatSetsMeApart.map((point, i) => (
-            <Text key={i} style={pdfStyles.listItem} wrap>{`${i + 1}. ${point || ""}`}</Text>
-          ))}
-        </View>
-      )}
+   {fields.whatSetsMeApart?.length > 0 && (
+  <View style={pdfStyles.section}>
+    <Text style={pdfStyles.heading}>What sets me apart:</Text>
+    {fields.whatSetsMeApart.map((point, i) => {
+      const t = fields.whatSetsMeApartType || "number";
+      const prefix = t === "number" ? `${i + 1}. ` : "• ";
+      return <Text key={i} style={pdfStyles.listItem} wrap>{prefix + (point || "")}</Text>;
+    })}
+  </View>
+)}
 
       {/* Recent Experience */}
       {fields.recentExperience && (
@@ -123,14 +166,16 @@ const CoverLetterPDF = ({ fields }) => (
       )}
 
       {/* What I Look Forward To */}
-      {fields.whatILookForwardTo?.length > 0 && (
-        <View style={pdfStyles.section}>
-          <Text style={pdfStyles.heading}>What I look forward to:</Text>
-          {fields.whatILookForwardTo.map((point, i) => (
-            <Text key={i} style={pdfStyles.listItem} wrap>• {point || ""}</Text>
-          ))}
-        </View>
-      )}
+     {fields.whatILookForwardTo?.length > 0 && (
+  <View style={pdfStyles.section}>
+    <Text style={pdfStyles.heading}>What I look forward to:</Text>
+    {fields.whatILookForwardTo.map((point, i) => {
+      const t = fields.whatILookForwardToType || "bullet";
+      const prefix = t === "number" ? `${i + 1}. ` : "• ";
+      return <Text key={i} style={pdfStyles.listItem} wrap>{prefix + (point || "")}</Text>;
+    })}
+  </View>
+)}
 
       {/* Why Selected */}
       {fields.whySelected && (
@@ -244,14 +289,6 @@ const CoverLetterOptimizer = () => {
     }, 100);
   };
 
-  const handleBulletChange = (key, newItems) => {
-    setFields({ ...fields, [key]: newItems });
-    setPdfLoading(true);
-    setTimeout(() => {
-      setPdfRenderKey(prev => prev + 1);
-      setPdfLoading(false);
-    }, 100);
-  };
 
   const handleOptimize = async () => {
     setLoading(true);
@@ -299,6 +336,36 @@ const CoverLetterOptimizer = () => {
       setLoading(false);
     }
   };
+  // helper to update PDF preview (keeps your existing behavior)
+const triggerPdfUpdate = () => {
+  setPdfLoading(true);
+  setTimeout(() => {
+    setPdfRenderKey(prev => prev + 1);
+    setPdfLoading(false);
+  }, 100);
+};
+
+// Now replace handleBulletChange with this:
+const handleBulletChange = (key, newItems, type) => {
+  setFields(prev => {
+    const merged = { ...prev, [key]: newItems };
+    if (type) merged[`${key}Type`] = type;
+    return merged;
+  });
+  triggerPdfUpdate();
+};
+
+// remove entire section (clears the list and its type)
+const removeSection = (key) => {
+  setFields(prev => {
+    const copy = { ...prev };
+    delete copy[key];
+    delete copy[`${key}Type`];
+    return copy;
+  });
+  triggerPdfUpdate();
+};
+
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -371,17 +438,21 @@ const CoverLetterOptimizer = () => {
               <TextAreaField label="Introduction" name="intro" value={fields.intro} onChange={handleChange} />
 
               <BulletListEditor
-                label="Why Consider Me"
-                items={fields.whyMe}
-                setItems={(items) => handleBulletChange("whyMe", items)}
-              />
-
-              <BulletListEditor
-                label="What Sets Me Apart"
-                items={fields.whatSetsMeApart}
-                setItems={(items) => handleBulletChange("whatSetsMeApart", items)}
-              />
-
+  label="Why Consider Me"
+  items={fields.whyMe || []}
+  listType={fields.whyMeType || "bullet"}
+  setItems={(items) => handleBulletChange("whyMe", items)}
+  setListType={(t) => handleBulletChange("whyMe", fields.whyMe || [], t)}
+  onRemoveSection={() => removeSection("whyMe")}
+/>
+<BulletListEditor
+  label="What Sets Me Apart"
+  items={fields.whatSetsMeApart || []}
+  listType={fields.whatSetsMeApartType || "number"}
+  setItems={(items) => handleBulletChange("whatSetsMeApart", items)}
+  setListType={(t) => handleBulletChange("whatSetsMeApart", fields.whatSetsMeApart || [], t)}
+  onRemoveSection={() => removeSection("whatSetsMeApart")}
+/>
               <TextAreaField
                 label="Most Recent Experience"
                 name="recentExperience"
@@ -390,10 +461,13 @@ const CoverLetterOptimizer = () => {
               />
 
               <BulletListEditor
-                label="What I Look Forward To"
-                items={fields.whatILookForwardTo}
-                setItems={(items) => handleBulletChange("whatILookForwardTo", items)}
-              />
+  label="What I Look Forward To"
+  items={fields.whatILookForwardTo || []}
+  listType={fields.whatILookForwardToType || "bullet"}
+  setItems={(items) => handleBulletChange("whatILookForwardTo", items)}
+  setListType={(t) => handleBulletChange("whatILookForwardTo", fields.whatILookForwardTo || [], t)}
+  onRemoveSection={() => removeSection("whatILookForwardTo")}
+/>
 
               <TextAreaField
                 label="Why I Should Be Selected"
