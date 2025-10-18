@@ -212,6 +212,7 @@ async function fetchAllUser() {
       headers: { "Content-Type": "application/json" },
     });
     const data = await reqToServer.json();
+    console.log(data);
     return data.users || [];
   } catch (error) {
     console.error(error);
@@ -234,14 +235,14 @@ const CoverLetterOptimizer = () => {
     name: "Venkata Mani Teja Sunkara",
     email: "samhitasari11@gmail.com",
     phone: "+1-571-545-1092",
-    location: "Herndon, VA, USA",
-    company: "Wipro",
-    role: "Cloud Engineer",
+    location: "USA",
+    company: "comapny name",
+    role: "job Role",
     greeting: "Dear Hiring Manager,",
     intro: "I bring a strong blend of cloud engineering, IT support, and data analytics expertise...",
     whyMe: ["Migrated 25+ enterprise applications...", "Built 8+ Splunk dashboards..."],
     whatSetsMeApart: ["Strategic + Execution Focus...", "Cloud + Analytics Expertise..."],
-    recentExperience: "At the University of Illinois, I developed ETL pipelines...",
+    recentExperience: `At the University of ${selectedUser?.bachelorsUniDegree || ''}, I developed ETL pipelines...`,
     whatILookForwardTo: ["Working with mission-driven teams...", "Designing and scaling systems..."],
     whySelected: "I bring the technical expertise of a Cloud Engineer...",
     closing: "Thank you for considering my application—I'd love the opportunity...",
@@ -296,7 +297,7 @@ const CoverLetterOptimizer = () => {
       const response = await fetch(`${BASE_URL}/api/optimize-cover-letter`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fields, jobDesc }),
+        body: JSON.stringify({ fields, jobDesc, userDetails:selectedUser }),
       });
 
       const data = await response.json();
@@ -394,19 +395,33 @@ const removeSection = (key) => {
                     key={idx}
                     className="p-2 hover:bg-gray-100 cursor-pointer"
                     onClick={() => {
-                      setSelectedUser(user);
-                      setFields((prev) => ({
-                        ...prev,
-                        name: user.name || prev.name,
-                        email: user.email || prev.email,
-                      }));
-                      setPdfLoading(true);
-                      setTimeout(() => {
-                        setPdfRenderKey(prev => prev + 1);
-                        setPdfLoading(false);
-                      }, 100);
-                    }}
-                  >
+  setSelectedUser(user);
+
+  const bachelorsUni = user?.bachelorsUniDegree || "";
+  const name = `${user?.firstName || ""} ${user?.lastName || ""}`.trim();
+  const phone = user?.contactNumber || "";
+  const email = user?.email || "";
+
+  // Construct the full sentence cleanly
+  const newExperience = bachelorsUni
+    ? `At ${bachelorsUni}, I developed ETL pipelines, optimized cloud infrastructure, and gained valuable hands-on experience with distributed systems.`
+    : "I developed ETL pipelines, optimized cloud infrastructure, and gained valuable hands-on experience with distributed systems.";
+
+  setFields((prev) => ({
+    ...prev,
+    name,
+    email,
+    phone,
+    recentExperience: newExperience, // dynamically set university here
+  }));
+
+  setPdfLoading(true);
+  setTimeout(() => {
+    setPdfRenderKey((prev) => prev + 1);
+    setPdfLoading(false);
+  }, 100);
+}}
+                 >
                     {user.name} ({user.email})
                   </li>
                 ))}
