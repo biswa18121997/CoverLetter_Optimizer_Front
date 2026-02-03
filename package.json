@@ -12,7 +12,9 @@
   "dependencies": {
     "@react-pdf/renderer": "^4.3.0",
     "@tailwindcss/vite": "^4.1.13",
+    "lucide-react": "^0.552.0",
     "pdfjs-dist": "^5.4.149",
+    "qrcode": "^1.5.4",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-pdf": "^10.1.0",
