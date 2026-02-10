@@ -901,10 +901,10 @@ export default function ResumeEditorOnePage() {
 			{
 				role: "Full Stack Developer",
 				company: "FLASHFIRE, Virtual",
-				duration: "5 months",//Jun 2025 - Present
+				duration: "6 months",//Jun 2025 - Present
 				location: "",
 				details: [
-					"Designed and Developed the dashboard backend for users, created frontend routing and Backend for managing the crud operations",
+					"Designed and Developed the dashboard backend and frontend for users, created frontend routing and Backend for managing the crud operations",
 					"Developed and Created the entire Landing page and its backend with discord integrations and automations with redis and messaging queues for calls automation and automated email and welcome email automation",
 					"Built several utility tools and browser extensions for varied number of tools with automation servers",
 					"Contributed to the development of AI resume builder and/or optimizer and AI cover letter builder and optimizer"
