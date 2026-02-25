@@ -316,7 +316,7 @@ const compactStyles = StyleSheet.create({
 	jobTitle: { fontSize: 10, fontWeight: "bold", marginBottom: 2 },
 	jobMeta: { fontSize: 8.5, color: "#444", marginTop: 2 },
 	bullet: { marginLeft: 6, fontSize: 8.8, marginTop: 1, marginBottom: 1 },
-	projectsContainer: { flexDirection: "column", gap: 6 },
+	projectsContainer: { flexDirection: "column" },
 	skillsContainer: {
 		flexDirection: "row",
 		flexWrap: "wrap",
@@ -653,7 +653,8 @@ const ResumePDF = ({ data, listStyles, template }) => {
 	// Single column templates (classic, modern, compact, professional, creative)
 	return (
 		<Document>
-			<Page size={[850, 1000]} style={styles.page}>
+			<Page size={{ width: 850, height: 1000 }} style={styles.page}>
+
 				{/* Header */}
 				{template === 'modern' ? (
 					<View style={styles.header}>
@@ -901,7 +902,7 @@ export default function ResumeEditorOnePage() {
 			{
 				role: "Full Stack Developer",
 				company: "FLASHFIRE, Virtual",
-				duration: "6 months",//Jun 2025 - Present
+				duration: "8 months",//Jun 2025 - Present
 				location: "",
 				details: [
 					"Designed and Developed the dashboard backend and frontend for users, created frontend routing and Backend for managing the crud operations",
@@ -910,6 +911,17 @@ export default function ResumeEditorOnePage() {
 					"Contributed to the development of AI resume builder and/or optimizer and AI cover letter builder and optimizer"
 				],
 			},
+			{
+				role: "Web Developer + Database and/or VPS Administrator + SEO Specialist",
+				company: "Filtotech, In-Office",
+				duration: "3 months",
+				location: "Kolkata, New Town",
+				details: [
+					"Designed and Developed their Several Websites and Landing Pages in Nextjs with highly optimized SSR and metatags",
+					"Optimized their Main Website SEO which increased their footfall more than thrice in just 3 weeks",
+					"Currently making their Office Portal/ ERP for billing and management tasks and clients tracking(UNDER DEVELOPMENT)"
+				]
+			}
 		],
 		education: [
 			{ degree: "Bachelor of Technology (B.Tech), Computer Science", institution: "West Bengal University Of Technology", year: "2017 - 2021", marks: "7.38 CGPA" },
