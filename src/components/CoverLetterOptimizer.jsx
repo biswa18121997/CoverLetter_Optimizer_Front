@@ -759,10 +759,10 @@ const ResumePDF = ({ data, listStyles, template }) => {
 					<Text style={styles.sectionTitle}>Extra Curricular Activities</Text>
 					{(data.extras || []).map((x, i) => renderListItem(x, i, "extras", styles))}
 				</View>
-				<View style={{ marginBottom: 4 }}>
+				{/* <View style={{ marginBottom: 4 }}>
 					<Text style={styles.sectionTitle}>Interests & Hobbies</Text>
 					{(data.interests || []).map((x, i) => renderListItem(x, i, "extras", styles))}
-				</View>
+				</View> */}
 				<View style={styles.footerSpacing} />
 			</Page>
 		</Document>
