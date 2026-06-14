@@ -895,21 +895,20 @@ export default function ResumeEditorOnePage() {
 		location: "Kolkata, India",
 		portfolio: "https://github.com/biswa18121997",
 		objectiveLines: [
-			"Result-oriented, detail-focused Full Stack Developer skilled in MERN Stack, Java, etc. Eager to collaborate and contribute to open",
-			"source, write reusable code and thrive in start-ups by building scalable solutions. Aspire to become an important part of the development Team of an Organization.",
+			"Result-oriented, detail-focused Full Stack Developer skilled in MERN Stack, Java, etc. Eager to collaborate and contribute to open source, write reusable code and thrive in start-ups by building scalable solutions. Aspire to become an important part of the development Team of an Organization.",
 		],
 		experience: [
 			{
 				role: "Full Stack Developer",
 				company: "FLASHFIRE, Virtual",
-				duration: "8 months",//Jun 2025 - Present
+				duration: "10 months",//Jun 2025 - Present
 				location: "",
 				details: [
-					"Designed and Developed the dashboard backend and frontend for users, created frontend routing and Backend for managing the crud operations",
-					"Developed and Created the entire Landing page and its backend with discord integrations and automations with redis and messaging queues for calls automation and automated email and welcome email automation",
-					"Built several utility tools and browser extensions for varied number of tools with automation servers",
-					"Contributed to the development of AI resume builder and/or optimizer and AI cover letter builder and optimizer"
-				],
+					"Engineered the complete frontend and backend architecture for the user dashboard, implementing robust client-side routing and optimized CRUD APIs.",
+					"Designed the company landing page and built a high-throughput backend integration featuring Discord webhooks, Redis-backed messaging queues, and automated multi-stage email onboarding workflows.",
+					"Developed a suite of custom utility tools and browser extensions integrated with dedicated automation servers to streamline operations team workflows and overseeing the work of ops team",
+					"Contributed to the core development and optimization of AI-powered resume and cover letter builders, enhancing user content generation."
+				]
 			},
 			{
 				role: "Web Developer + Database and/or VPS Administrator + SEO Specialist",
@@ -917,8 +916,8 @@ export default function ResumeEditorOnePage() {
 				duration: "3 months",
 				location: "Kolkata, New Town",
 				details: [
-					"Designed and Developed their Several Websites and Landing Pages in Nextjs with highly optimized SSR and metatags",
-					"Optimized their Main Website SEO which increased their footfall more than thrice in just 3 weeks",
+					"Designed and Developed their Several Websites and Landing Pages in Nextjs with highly optimized SEO using SSR and metatags",
+					"Optimized their Main Website SEO which increased their footfall more than thrice in less than 3 weeks",
 					"Currently making their Office Portal/ ERP for billing and management tasks and clients tracking(UNDER DEVELOPMENT)"
 				]
 			}
