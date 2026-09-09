@@ -886,7 +886,7 @@ const ExperienceEditor = ({ experience, setExperience, workListStyle, setWorkLis
 };
 // ---------------- Main Component ----------------
 export default function ResumeEditorOnePage() {
-	const [template, setTemplate] = useState('modern');
+	const [template, setTemplate] = useState('professional');
 	// Prefill exact content you gave, but convert multiline parts into arrays
 	const [data, setData] = useState({
 		name: "Biswajit Sharma",
