@@ -905,9 +905,11 @@ export default function ResumeEditorOnePage() {
 				location: "",
 				details: [
 					"Engineered the complete frontend and backend architecture for the user dashboard, implementing robust client-side routing and optimized CRUD APIs.",
-					"Designed the company landing page and built a high-throughput backend integration featuring Discord webhooks, Redis-backed messaging queues, and automated multi-stage email onboarding workflows.",
-					"Developed a suite of custom utility tools and browser extensions integrated with dedicated automation servers to streamline operations team workflows and overseeing the work of ops team",
-					"Contributed to the core development and optimization of AI-powered resume and cover letter builders, enhancing user content generation."
+					"Designed the company landing page and built a high-throughput backend integration featuring Discord webhooks, Redis-backed messaging queues, and automating 100%of the multi-stage email onboarding 
+workflows.",
+					"Developed a suite of custom utility tools and browser extensions integrated with dedicated automation servers to streamline operations team workflows and overseeing the work of ops team completely",
+					"Contributed to the core development and optimization of AI-powered resume and cover letter builders, enhancing user content generation.",
+"Implemented the automatic job search, application and enhanced sorting systems for user dashboard using web scrapping and Apify api methods , making manual job search and addition to zero."
 				]
 			},
 			{
@@ -918,7 +920,11 @@ export default function ResumeEditorOnePage() {
 				details: [
 					"Designed and Developed their Several Websites and Landing Pages in Nextjs with highly optimized SEO using SSR and metatags",
 					"Optimized their Main Website SEO which increased their footfall more than thrice in less than 3 weeks",
-					"Currently making their Office Portal/ ERP for billing and management tasks and clients tracking(UNDER DEVELOPMENT)"
+					"Currently making their Office Portal/ ERP for billing and management tasks and clients tracking(UNDER DEVELOPMENT)",
+"Developed new websites with highly rated seo optimization in Next.js for bidhan pharmaceuticals pvt. Ltd and aquapure.",
+"Acting as junior validation executive,made the web portal with authentication and RBAC for industrial and pharmaceuticals validation, reducing manual data filling and report generation to 90%.",
+"Working as site engineer, implemented the complete renewal of HVAC systems for liquid manufacturing department for a valuable client - East India Pharmaceutical works Limited ranging from design,execution 
+to on-ground operational aspects"
 				]
 			}
 		],
@@ -953,15 +959,7 @@ export default function ResumeEditorOnePage() {
 				],
 				link: 'https://shoppy-globe-two-plum.vercel.app'
 			},
-			{
-				title: " Weather Forecast Application ↗ ",
-				duration: "",//Oct 2021 - Oct 2022
-				summaryLines: [
-					` Developed a weather forecast application with a user friendly interface, enabling to check real-time weather and forecasts at live locations. Designed with a focus on responsiveness, user experience and accessibility across devices. `,
-					`Implemented asynchronous APIs to retrieve weather data and dynamically display current conditions and forecasts. Utilized JavaScript for efficient data handling and interaction, enhancing functionality and interactivity of the application.`,
-				],
-				link: 'https://biswa18121997.github.io/weatherApp.github.io/'
-			},
+			
 			{
 				title: "Flappy Bird Game",
 				duration: "",//Oct 2021 - Oct 2022
