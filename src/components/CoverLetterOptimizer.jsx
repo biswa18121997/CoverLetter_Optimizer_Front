@@ -922,8 +922,7 @@ export default function ResumeEditorOnePage() {
 					"Currently making their Office Portal/ ERP for billing and management tasks and clients tracking(UNDER DEVELOPMENT)",
 "Developed new websites with highly rated seo optimization in Next.js for bidhan pharmaceuticals pvt. Ltd and aquapure.",
 "Acting as junior validation executive,made the web portal with authentication and RBAC for industrial and pharmaceuticals validation, reducing manual data filling and report generation to 90%.",
-"Working as site engineer, implemented the complete renewal of HVAC systems for liquid manufacturing department for a valuable client - East India Pharmaceutical works Limited ranging from design,execution 
-to on-ground operational aspects"
+"Working as site engineer, implemented the complete renewal of HVAC systems for liquid manufacturing department for a valuable client - East India Pharmaceutical works Limited ranging from design,execution to on-ground operational aspects"
 				]
 			}
 		],
