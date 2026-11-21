@@ -914,7 +914,7 @@ export default function ResumeEditorOnePage() {
 			{
 				role: "Web Developer + Database and/or VPS Administrator + SEO Specialist",
 				company: "Filtotech, In-Office",
-				duration: "3 months",
+				duration: "11 months",
 				location: "Kolkata, New Town",
 				details: [
 					"Designed and Developed their Several Websites and Landing Pages in Nextjs with highly optimized SEO using SSR and metatags",
@@ -936,7 +936,15 @@ export default function ResumeEditorOnePage() {
 			"C/C++ — APTECH, Kolkata",//(Sep 2017 - Jan 2018)
 			"CCNA(Cisco Certified Networking Associate) — CISCO, Virtual",//(Sep 2019 - Mar 2020)
 		],
-		projects: [
+		projects: [{
+				title: "Weather Forecast Application ↗",
+				duration: "", // Add duration here
+				summaryLines: [
+					"Developed a weather forecast application with a user-friendly interface, enabling users to check real-time weather and forecasts at live locations. Designed with a focus on responsiveness, user experience, and accessibility across devices.",
+					"Implemented asynchronous APIs to retrieve weather data and dynamically display current conditions and forecasts. Utilized JavaScript for efficient data handling and interaction, enhancing functionality and interactivity of the application.",
+				],
+				link: 'https://biswa18121997.github.io/weatherApp.github.io/'
+			},
 			{
 				title: "Developed YouTube-Inspired Platform ↗",
 				duration: "",//May 2025 - Jun 2025
