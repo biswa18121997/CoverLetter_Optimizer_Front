@@ -905,8 +905,7 @@ export default function ResumeEditorOnePage() {
 				location: "",
 				details: [
 					"Engineered the complete frontend and backend architecture for the user dashboard, implementing robust client-side routing and optimized CRUD APIs.",
-					"Designed the company landing page and built a high-throughput backend integration featuring Discord webhooks, Redis-backed messaging queues, and automating 100%of the multi-stage email onboarding 
-workflows.",
+					"Designed the company landing page and built a high-throughput backend integration featuring Discord webhooks, Redis-backed messaging queues, and automating 100%of the multi-stage email onboarding workflows.",
 					"Developed a suite of custom utility tools and browser extensions integrated with dedicated automation servers to streamline operations team workflows and overseeing the work of ops team completely",
 					"Contributed to the core development and optimization of AI-powered resume and cover letter builders, enhancing user content generation.",
 "Implemented the automatic job search, application and enhanced sorting systems for user dashboard using web scrapping and Apify api methods , making manual job search and addition to zero."
